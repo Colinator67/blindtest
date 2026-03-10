@@ -1,16 +1,20 @@
 [
 {
 "title":"Get Lucky",
-"artists":["Daft Punk","Pharrell Williams"],
+"mainArtists":["Daft Punk"],
+"featuring":["Pharrell Williams"],
 "youtube":"5NV6Rdv1a3I",
 "link":"https://open.spotify.com/track/2Foc5Q5nqNiosCNqttzHof",
-"hints":["2013","Groupe électro français"]
+"hints":["2013","Groupe électro français"],
+"anecdote":"Cette chanson a remporté 2 Grammy Awards en 2014."
 },
 {
 "title":"Blinding Lights",
-"artists":["The Weeknd"],
+"mainArtists":["The Weeknd"],
+"featuring":[],
 "youtube":"4NRXx6U8ABQ",
 "link":"https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b",
-"hints":["2020","Style synthwave","Album After Hours"]
+"hints":["2020","Style synthwave","Album After Hours"],
+"anecdote":"La chanson a été l'une des plus écoutées de la décennie sur Spotify."
 }
 ]
