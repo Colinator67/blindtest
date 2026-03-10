@@ -1,0 +1,27 @@
+<input id="title" placeholder="Titre">
+<input id="artist" placeholder="Artiste">
+<input id="youtube" placeholder="ID Youtube">
+
+<textarea id="hints"></textarea>
+
+<button onclick="generate()">Créer entrée JSON</button>
+
+<pre id="output"></pre>
+
+<script>
+
+function generate(){
+
+const title=document.getElementById("title").value
+const artist=document.getElementById("artist").value
+const youtube=document.getElementById("youtube").value
+const hints=document.getElementById("hints").value.split(",")
+
+const obj={title,artist,youtube,hints}
+
+document.getElementById("output").innerText=
+JSON.stringify(obj,null,2)
+
+}
+
+</script>
