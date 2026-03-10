@@ -1,11 +1,9 @@
 let songs=[]
 let todaySongs=[]
 let currentSong=0
+let hintIndex=0
 
 let player
-let playStep=0
-
-const durations=[1,3,6,10,15]
 
 fetch("songs.json")
 .then(r=>r.json())
@@ -18,7 +16,6 @@ loadYT()
 function chooseSongs(){
 
 const d=new Date()
-
 const seed=d.getDate()+d.getMonth()*31
 
 todaySongs=[
@@ -42,26 +39,66 @@ player=new YT.Player("player",{
 height:"0",
 width:"0",
 videoId:todaySongs[0].youtube,
-playerVars:{controls:0}
+host:"https://www.youtube-nocookie.com",
+playerVars:{
+controls:0,
+modestbranding:1,
+rel:0
+}
 })
 
 }
 
 document.getElementById("playButton").onclick=()=>{
 
-let duration=durations[Math.min(playStep,durations.length-1)]
-
-player.loadVideoById(todaySongs[currentSong].youtube,0)
-
+player.loadVideoById(todaySongs[currentSong].youtube)
 player.playVideo()
 
-setTimeout(()=>{
+}
+
+document.getElementById("pauseButton").onclick=()=>{
 
 player.pauseVideo()
 
-},duration*1000)
+}
 
-playStep++
+document.getElementById("nextSong").onclick=()=>{
+
+currentSong++
+
+if(currentSong>=todaySongs.length){
+
+document.getElementById("result").innerText="🎉 Blindtest terminé"
+return
+
+}
+
+player.loadVideoById(todaySongs[currentSong].youtube)
+
+resetHints()
+
+document.getElementById("songLink").innerHTML=""
+document.getElementById("result").innerText=""
+
+}
+
+document.getElementById("hintButton").onclick=()=>{
+
+const song=todaySongs[currentSong]
+
+if(hintIndex<song.hints.length){
+
+document.getElementById("hintText").innerText=song.hints[hintIndex]
+hintIndex++
+
+}
+
+}
+
+function resetHints(){
+
+hintIndex=0
+document.getElementById("hintText").innerText=""
 
 }
 
@@ -121,9 +158,8 @@ if(similarity(title,song.title)&&similarity(artist,song.artist)){
 
 document.getElementById("result").innerText="✅ Bonne réponse"
 
-currentSong++
-
-playStep=0
+document.getElementById("songLink").innerHTML=
+`<a href="${song.link}" target="_blank">🎧 Écouter la musique</a>`
 
 }else{
 
