@@ -23,6 +23,7 @@ function chooseSongs(){
     ]
 }
 
+// === YouTube ===
 function loadYT(){
     const tag = document.createElement("script")
     tag.src = "https://www.youtube.com/iframe_api"
@@ -35,16 +36,13 @@ function onYouTubeIframeAPIReady(){
         width:"0",
         videoId:todaySongs[0].youtube,
         host:"https://www.youtube-nocookie.com",
-        playerVars:{
-            controls:0,
-            modestbranding:1,
-            rel:0
-        },
+        playerVars:{ controls:0, modestbranding:1, rel:0 },
         events: { 'onStateChange': onPlayerStateChange }
     })
 }
 
 // === Barre de progression ===
+let progressInterval
 function startProgress(){
     stopProgress()
     progressInterval = setInterval(()=>{
@@ -56,10 +54,7 @@ function startProgress(){
         }
     },200)
 }
-
-function stopProgress(){
-    clearInterval(progressInterval)
-}
+function stopProgress(){ clearInterval(progressInterval) }
 
 // === Chronomètre ===
 function startTimer(){
@@ -71,27 +66,32 @@ function startTimer(){
         document.getElementById("timer").innerText = `⏱ Temps écoulé : ${secondsElapsed}s`
     },1000)
 }
+function stopTimer(){ clearInterval(timerInterval) }
 
-function stopTimer(){
-    clearInterval(timerInterval)
-}
-
-// === Dynamique artistes ===
+// === Champs dynamiques artistes / featuring ===
 function renderArtistInputs(){
     const container = document.getElementById("artistInputs")
     container.innerHTML = '<input id="guessTitle" placeholder="Titre">'
     const song = todaySongs[currentSong]
-    song.artists.forEach((_,i)=>{
+    song.mainArtists.forEach((_,i)=>{
         const input = document.createElement("input")
-        input.id = `guessArtist${i}`
-        input.placeholder = i===0 ? "Artiste principal" : `Featuring ${i}`
+        input.id = `mainArtist${i}`
+        input.placeholder = i===0 ? "Artiste principal" : `Artiste principal ${i+1}`
+        container.appendChild(input)
+    })
+    song.featuring.forEach((_,i)=>{
+        const input = document.createElement("input")
+        input.id = `featArtist${i}`
+        input.placeholder = `Featuring ${i+1}`
         container.appendChild(input)
     })
 }
 
+// === Réinitialisation indices ===
 function resetHints(){
     hintIndex = 0
     document.getElementById("hintText").innerText = ""
+    document.getElementById("anecdote").innerText = ""
 }
 
 // === Boutons ===
@@ -134,12 +134,18 @@ document.getElementById("hintButton").onclick = ()=>{
 document.getElementById("submit").onclick = ()=>{
     const song = todaySongs[currentSong]
     const title = document.getElementById("guessTitle").value
-    const artistInputs = song.artists.map((_,i)=>document.getElementById(`guessArtist${i}`).value)
-    const correctArtists = song.artists.every((a,i)=>similarity(a,artistInputs[i] || ""))
-    if(similarity(title,song.title) && correctArtists){
-        document.getElementById("result").innerText = `✅ Bonne réponse ! Temps écoulé : ${secondsElapsed}s`
+
+    const mainInputs = song.mainArtists.map((_,i)=>document.getElementById(`mainArtist${i}`).value)
+    const featInputs = song.featuring.map((_,i)=>document.getElementById(`featArtist${i}`).value)
+
+    const correctMain = song.mainArtists.every((a,i)=>similarity(a,mainInputs[i]||""))
+    const correctFeat = song.featuring.every((a,i)=>similarity(a,featInputs[i]||""))
+
+    if(similarity(title,song.title) && correctMain && correctFeat){
         stopTimer()
+        document.getElementById("result").innerText = `✅ Bonne réponse ! Temps écoulé : ${secondsElapsed}s`
         document.getElementById("songLink").innerHTML = `<a href="${song.link}" target="_blank">🎧 Écouter la musique complète</a>`
+        document.getElementById("anecdote").innerText = song.anecdote || ""
     } else {
         document.getElementById("result").innerText = "❌ Mauvaise réponse"
     }
@@ -172,7 +178,7 @@ function levenshtein(a,b){
     return matrix[b.length][a.length]
 }
 
-// === Événement barre + timer au changement de musique ===
+// === Événements player ===
 function onPlayerStateChange(event){
     if(event.data == YT.PlayerState.PLAYING){
         startProgress()
@@ -183,7 +189,5 @@ function onPlayerStateChange(event){
     }
 }
 
-// === Initial render des inputs artistes ===
-window.onload = ()=>{
-    renderArtistInputs()
-}
+// === Initialisation ===
+window.onload = ()=>{ renderArtistInputs() }
