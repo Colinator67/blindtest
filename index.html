@@ -1,43 +1,41 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Blindtest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blindtest brossage de dent</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>🎵 Blindtest du jour</h1>
+<div class="container">
+  <h1>🎵 Blindtest du jour</h1>
 
-<div class="player">
+  <div class="player-controls">
+    <button id="playButton">▶️ Play</button>
+    <button id="pauseButton">⏸ Pause</button>
+    <button id="nextSong">⏭ Musique suivante</button>
+  </div>
 
-<button id="playButton">▶️ Play</button>
-<button id="pauseButton">⏸ Pause</button>
-<button id="nextSong">⏭ Musique suivante</button>
+  <div id="progressContainer">
+    <div id="progressBar"></div>
+  </div>
 
-<div id="player"></div>
+  <div class="inputs">
+    <input id="guessTitle" placeholder="Titre">
+    <input id="guessArtist" placeholder="Artiste">
+    <button id="submit">C'est mon ultime bafouille</button>
+  </div>
 
+  <button id="hintButton">💡 Indice</button>
+  <p id="hintText"></p>
+
+  <div id="result"></div>
+  <div id="songLink"></div>
+
+  <div id="player"></div>
 </div>
-
-<div class="inputs">
-
-<input id="guessTitle" placeholder="Titre">
-<input id="guessArtist" placeholder="Artiste">
-
-<button id="submit">Valider</button>
-
-</div>
-
-<button id="hintButton">💡 Indice</button>
-<p id="hintText"></p>
-
-<div id="result"></div>
-
-<div id="songLink"></div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
