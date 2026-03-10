@@ -1,24 +1,16 @@
 [
 {
 "title":"Get Lucky",
-"artist":"Daft Punk",
+"artists":["Daft Punk","Pharrell Williams"],
 "youtube":"5NV6Rdv1a3I",
 "link":"https://open.spotify.com/track/2Foc5Q5nqNiosCNqttzHof",
-"hints":[
-"Sortie en 2013",
-"Feat Pharrell Williams",
-"Groupe électro français"
-]
+"hints":["2013","Groupe électro français"]
 },
 {
 "title":"Blinding Lights",
-"artist":"The Weeknd",
+"artists":["The Weeknd"],
 "youtube":"4NRXx6U8ABQ",
 "link":"https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b",
-"hints":[
-"Sortie en 2020",
-"Style synthwave",
-"Album After Hours"
-]
+"hints":["2020","Style synthwave","Album After Hours"]
 }
 ]
