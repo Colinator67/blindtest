@@ -4,7 +4,7 @@ let currentSong = 0
 let hintIndex = 0
 let timerInterval
 let progressInterval
-let secondsElapsed = 0
+let startTime
 let player
 
 // Chargement du JSON
@@ -58,15 +58,16 @@ function resetHints() {
   document.getElementById("anecdote").innerText = ""
 }
 
-// === Chronomètre ===
+// === Chronomètre centièmes ===
 function startTimer() {
   stopTimer()
-  secondsElapsed = 0
-  document.getElementById("timer").innerText = `⏱ Temps écoulé : 0s`
+  startTime = Date.now()
   timerInterval = setInterval(() => {
-    secondsElapsed++
-    document.getElementById("timer").innerText = `⏱ Temps écoulé : ${secondsElapsed}s`
-  }, 1000)
+    const elapsed = Date.now() - startTime
+    const seconds = Math.floor(elapsed / 1000)
+    const centi = Math.floor((elapsed % 1000) / 10)
+    document.getElementById("timer").innerText = `⏱ Temps écoulé : ${seconds}.${centi < 10 ? '0'+centi : centi}s`
+  }, 10)
 }
 
 function stopTimer() { clearInterval(timerInterval) }
@@ -151,9 +152,13 @@ document.getElementById("submit").onclick = () => {
   const correctMain = song.mainArtists.every((a,i)=>similarity(a, mainInputs[i] || ""))
   const correctFeat = song.featuring.every((a,i)=>similarity(a, featInputs[i] || ""))
 
+  const elapsed = Date.now() - startTime
+  const seconds = Math.floor(elapsed / 1000)
+  const centi = Math.floor((elapsed % 1000) / 10)
+
   if(similarity(title, song.title) && correctMain && correctFeat){
     stopTimer()
-    document.getElementById("result").innerText = `✅ Bonne réponse ! Temps écoulé : ${secondsElapsed}s`
+    document.getElementById("result").innerText = `✅ Bonne réponse ! Temps écoulé : ${seconds}.${centi < 10 ? '0'+centi : centi}s`
     document.getElementById("songLink").innerHTML = `<a href="${song.link}" target="_blank">🎧 Écouter la musique complète</a>`
     document.getElementById("anecdote").innerText = song.anecdote || ""
   } else {
