@@ -1,6 +1,6 @@
-// ===============================
+// =========================
 // VARIABLES
-// ===============================
+// =========================
 
 let songs = []
 let todaySongs = []
@@ -12,13 +12,15 @@ let startTime
 let timerInterval = null
 let progressInterval = null
 
+let elapsedBeforePause = 0
+
 let titleHintIndex = 0
 let artistHintIndex = 0
 
 
-// ===============================
-// CHARGEMENT DES CHANSONS
-// ===============================
+// =========================
+// CHARGEMENT JSON
+// =========================
 
 fetch("songs.json")
 .then(res => res.json())
@@ -35,9 +37,9 @@ loadYouTubeAPI()
 })
 
 
-// ===============================
-// CHOIX DES MUSIQUES DU JOUR
-// ===============================
+// =========================
+// CHOIX MUSIQUES DU JOUR
+// =========================
 
 function chooseSongs(){
 
@@ -53,15 +55,21 @@ songs[(seed+7) % songs.length]
 }
 
 
-// ===============================
+// =========================
 // INPUTS DYNAMIQUES
-// ===============================
+// =========================
 
 function renderInputs(){
 
 const container = document.getElementById("artistInputs")
 
-container.innerHTML = `<input id="guessTitle" placeholder="Titre">`
+container.innerHTML = ""
+
+const title = document.createElement("input")
+title.id = "guessTitle"
+title.placeholder = "Titre"
+
+container.appendChild(title)
 
 const song = todaySongs[currentSong]
 
@@ -88,23 +96,23 @@ container.appendChild(input)
 }
 
 
-// ===============================
+// =========================
 // YOUTUBE API
-// ===============================
+// =========================
 
 function loadYouTubeAPI(){
 
 const tag = document.createElement("script")
+
 tag.src = "https://www.youtube.com/iframe_api"
 
 document.body.appendChild(tag)
 
 }
 
-
 window.onYouTubeIframeAPIReady = function(){
 
-player = new YT.Player("player", {
+player = new YT.Player("player",{
 
 height:"0",
 width:"0",
@@ -122,9 +130,9 @@ rel:0
 }
 
 
-// ===============================
+// =========================
 // CONTROLES AUDIO
-// ===============================
+// =========================
 
 document.getElementById("playButton").onclick = () => {
 
@@ -147,9 +155,9 @@ stopProgress()
 }
 
 
-// ===============================
+// =========================
 // MUSIQUE SUIVANTE
-// ===============================
+// =========================
 
 document.getElementById("nextSong").onclick = () => {
 
@@ -167,6 +175,9 @@ return
 
 player.loadVideoById(todaySongs[currentSong].youtube)
 
+elapsedBeforePause = 0
+document.getElementById("timer").innerText = "⏱ Temps : 0.00s"
+
 renderInputs()
 
 resetHints()
@@ -178,9 +189,9 @@ document.getElementById("anecdote").innerText = ""
 }
 
 
-// ===============================
+// =========================
 // INDICES
-// ===============================
+// =========================
 
 function resetHints(){
 
@@ -191,7 +202,6 @@ document.getElementById("titleHints").innerHTML = ""
 document.getElementById("artistHints").innerHTML = ""
 
 }
-
 
 document.getElementById("titleHintButton").onclick = () => {
 
@@ -210,7 +220,6 @@ titleHintIndex++
 }
 
 }
-
 
 document.getElementById("artistHintButton").onclick = () => {
 
@@ -231,9 +240,9 @@ artistHintIndex++
 }
 
 
-// ===============================
+// =========================
 // VALIDATION REPONSE
-// ===============================
+// =========================
 
 document.getElementById("submit").onclick = () => {
 
@@ -331,19 +340,19 @@ document.getElementById("anecdote").innerText = song.anecdote
 }
 
 
-// ===============================
+// =========================
 // TIMER
-// ===============================
+// =========================
 
 function startTimer(){
 
 if(timerInterval) return
 
-startTime = Date.now()
+startTime = Date.now() - elapsedBeforePause
 
 timerInterval = setInterval(()=>{
 
-const elapsed = Date.now()-startTime
+const elapsed = Date.now() - startTime
 
 const seconds = Math.floor(elapsed/1000)
 const centi = Math.floor((elapsed%1000)/10)
@@ -355,8 +364,11 @@ document.getElementById("timer").innerText =
 
 }
 
-
 function stopTimer(){
+
+if(!timerInterval) return
+
+elapsedBeforePause = Date.now() - startTime
 
 clearInterval(timerInterval)
 
@@ -365,9 +377,9 @@ timerInterval = null
 }
 
 
-// ===============================
+// =========================
 // PROGRESSION AUDIO
-// ===============================
+// =========================
 
 function startProgress(){
 
@@ -388,7 +400,6 @@ document.getElementById("progressBar").style.width = percent + "%"
 
 }
 
-
 function stopProgress(){
 
 clearInterval(progressInterval)
@@ -398,9 +409,9 @@ progressInterval = null
 }
 
 
-// ===============================
+// =========================
 // SIMILARITE
-// ===============================
+// =========================
 
 function similarity(a,b){
 
@@ -410,7 +421,6 @@ b = b.toLowerCase()
 return levenshtein(a,b) <= 2
 
 }
-
 
 function levenshtein(a,b){
 
