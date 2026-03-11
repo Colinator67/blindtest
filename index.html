@@ -3,46 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blindtest pour te laver les dents</title>
+<title>Blindtest quotidien</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-  <h1>🎵 Blindtest brossage des dents</h1>
+<h1>🎵 Blindtest du jour</h1>
 
-  <div class="player-controls">
-    <button id="playButton">▶️ Play</button>
-    <button id="pauseButton">⏸ Pause</button>
-    <button id="nextSong">⏭ Musique suivante</button>
-  </div>
+<div id="player"></div>
 
-  <div id="progressContainer">
-    <div id="progressBar"></div>
-  </div>
-
-  <div class="inputs" id="artistInputs">
-    <input id="guessTitle" placeholder="Titre">
-  </div>
-
-  <button id="submit">Valider</button>
-  <button id="hintButton">💡 Indice</button>
-  <p id="hintText"></p>
-
-  <div id="timer">⏱ Temps écoulé : 0s</div>
-
-  <div id="result"></div>
-  <div id="songLink"></div>
-  <div id="anecdote" style="margin-top:10px; font-style:italic;"></div>
-
-  <div id="player"></div>
+<div class="controls">
+<button id="playButton">▶ Play</button>
+<button id="pauseButton">⏸ Pause</button>
+<button id="nextSong">⏭ Musique suivante</button>
 </div>
 
+<div class="progressContainer">
+<div id="progressBar"></div>
+</div>
+
+<div id="timer">⏱ Temps écoulé : 0.00s</div>
+
+<div id="artistInputs"></div>
+
+<button id="submit">Valider</button>
+
+<h3>Indices</h3>
+
+<button id="titleHintButton">Indice sur le titre</button>
+<div id="titleHints"></div>
+
+<button id="artistHintButton">Indice sur l'artiste</button>
+<div id="artistHints"></div>
+
+<div id="result"></div>
+
+<div id="songLink"></div>
+
+<div id="anecdote"></div>
+
 <script src="script.js"></script>
+
 </body>
-
-  <h2>Historique</h2>
-<div id="history"></div>
 </html>
-
-
