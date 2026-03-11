@@ -85,6 +85,16 @@ document.body.appendChild(tag)
 
 }
 
+// === YouTube events ===
+function onPlayerStateChange(event){
+  if(event.data == YT.PlayerState.PLAYING){
+    startProgress()
+    startTimer()
+  } else {
+    stopProgress()
+    stopTimer()
+  }
+}
 
 function onYouTubeIframeAPIReady(){
 
@@ -360,3 +370,4 @@ matrix[i-1][j]+1
 return matrix[b.length][a.length]
 
 }
+
