@@ -127,6 +127,7 @@ const tag=document.createElement("script")
 tag.src="https://www.youtube.com/iframe_api"
 
 document.body.appendChild(tag)
+document.getElementById("anecdote").innerText = song.anecdote
 
 }
 
@@ -173,6 +174,7 @@ stopTimer()
 stopProgress()
 
 }
+
 
 
 // =====================
@@ -441,7 +443,7 @@ document.getElementById("result").innerText =
 document.getElementById("songLink").innerHTML =
 `<a href="${song.link}" target="_blank">🎧 Écouter la musique</a>`
 
-document.getElementById("anecdote").innerText = song.anecdote
+
 
 }
 
