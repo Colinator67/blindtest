@@ -342,3 +342,150 @@ clearInterval(progressInterval)
 progressInterval=null
 
 }
+
+// =====================
+// VALIDATION REPONSE
+// =====================
+
+document.getElementById("submit").onclick = () => {
+
+const song = todaySongs[currentSong]
+
+let allCorrect = true
+
+
+// ----- TITRE -----
+
+const titleInput = document.getElementById("guessTitle")
+
+if(similarity(titleInput.value, song.title)){
+
+titleInput.classList.add("correct")
+titleInput.classList.remove("wrong")
+
+}else{
+
+titleInput.classList.add("wrong")
+titleInput.classList.remove("correct")
+
+allCorrect = false
+
+}
+
+
+// ----- ARTISTES -----
+
+song.mainArtists.forEach((artist,i)=>{
+
+const input = document.getElementById(`mainArtist${i}`)
+
+if(similarity(input.value, artist)){
+
+input.classList.add("correct")
+input.classList.remove("wrong")
+
+}else{
+
+input.classList.add("wrong")
+input.classList.remove("correct")
+
+allCorrect = false
+
+}
+
+})
+
+
+// ----- FEAT -----
+
+song.featuring.forEach((artist,i)=>{
+
+const input = document.getElementById(`featArtist${i}`)
+
+if(similarity(input.value, artist)){
+
+input.classList.add("correct")
+input.classList.remove("wrong")
+
+}else{
+
+input.classList.add("wrong")
+input.classList.remove("correct")
+
+allCorrect = false
+
+}
+
+})
+
+
+// ----- SI TOUT EST BON -----
+
+if(allCorrect){
+
+stopTimer()
+
+const elapsed = Date.now() - startTime
+
+const seconds = Math.floor(elapsed/1000)
+const centi = Math.floor((elapsed%1000)/10)
+
+document.getElementById("result").innerText =
+`✅ Bonne réponse ! Temps : ${seconds}.${centi<10?'0'+centi:centi}s`
+
+document.getElementById("songLink").innerHTML =
+`<a href="${song.link}" target="_blank">🎧 Écouter la musique</a>`
+
+document.getElementById("anecdote").innerText = song.anecdote
+
+}
+
+}
+
+// =====================
+// SIMILARITE
+// =====================
+
+function similarity(a,b){
+
+if(!a) return false
+
+a = a.toLowerCase().trim()
+b = b.toLowerCase().trim()
+
+return levenshtein(a,b) <= 2
+
+}
+
+function levenshtein(a,b){
+
+const matrix=[]
+
+for(let i=0;i<=b.length;i++){matrix[i]=[i]}
+for(let j=0;j<=a.length;j++){matrix[0][j]=j}
+
+for(let i=1;i<=b.length;i++){
+
+for(let j=1;j<=a.length;j++){
+
+if(b.charAt(i-1)==a.charAt(j-1)){
+
+matrix[i][j]=matrix[i-1][j-1]
+
+}else{
+
+matrix[i][j]=Math.min(
+matrix[i-1][j-1]+1,
+matrix[i][j-1]+1,
+matrix[i-1][j]+1
+)
+
+}
+
+}
+
+}
+
+return matrix[b.length][a.length]
+
+}
