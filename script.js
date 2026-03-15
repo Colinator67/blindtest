@@ -347,6 +347,11 @@ progressInterval=null
 // VALIDATION REPONSE
 // =====================
 
+// A supprimer, cest un test
+document.getElementById("submit").onclick = () => {
+console.log("clic détecté")
+}
+
 document.getElementById("submit").onclick = () => {
 
 const song = todaySongs[currentSong]
