@@ -1,47 +1,92 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blindtest quotidien</title>
-<link rel="stylesheet" href="style.css">
+<title>Blindtest</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+margin:30px;
+}
+
+input{
+display:block;
+margin:8px auto;
+padding:8px;
+font-size:16px;
+}
+
+button{
+margin:5px;
+padding:8px 12px;
+font-size:16px;
+}
+
+.correct{
+background:#b6ffb6;
+}
+
+.wrong{
+background:#ffb6b6;
+}
+
+#progressContainer{
+width:80%;
+height:10px;
+background:#ddd;
+margin:20px auto;
+}
+
+#progressBar{
+height:100%;
+width:0%;
+background:#4caf50;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>🎵 Blindtest du jour</h1>
+<h1>Blindtest du jour 🎵</h1>
+
+<div id="timer">⏱ Temps : 0.00s</div>
 
 <div id="player"></div>
 
-<div class="controls">
-<button id="playButton">▶ Play</button>
-<button id="pauseButton">⏸ Pause</button>
-<button id="nextSong">⏭ Musique suivante</button>
-</div>
-
-<div class="progressContainer">
+<div id="progressContainer">
 <div id="progressBar"></div>
 </div>
 
-<div id="timer">⏱ Temps écoulé : 0.00s</div>
+<button id="playButton">▶️ Play</button>
+<button id="pauseButton">⏸ Pause</button>
+<button id="nextSong">⏭ Musique suivante</button>
+
+<h3>Ta réponse</h3>
 
 <div id="artistInputs"></div>
 
 <button id="submit">Valider</button>
+<button id="giveUp">Je donne ma langue au chat</button>
 
 <h3>Indices</h3>
 
-<button id="titleHintButton">Indice sur le titre</button>
-<div id="titleHints"></div>
+<button id="titleHintButton">Indice titre</button>
+<button id="artistHintButton">Indice artiste</button>
 
-<button id="artistHintButton">Indice sur l'artiste</button>
+<div id="titleHints"></div>
 <div id="artistHints"></div>
 
-<div id="result"></div>
+<h3 id="result"></h3>
 
 <div id="songLink"></div>
 
-<div id="anecdote"></div>
+<p id="anecdote"></p>
 
 <script src="script.js"></script>
 
