@@ -149,6 +149,8 @@ rel:0
 
 })
 
+document.getElementById("anecdote").innerText = todaySongs[0].anecdote
+  
 }
 
 
@@ -199,6 +201,8 @@ return
 
 player.loadVideoById(todaySongs[currentSong].youtube)
 
+document.getElementById("anecdote").innerText = todaySongs[currentSong].anecdote
+
 elapsedBeforePause=0
 
 document.getElementById("timer").innerText="⏱ Temps : 0.00s"
@@ -225,8 +229,6 @@ document.getElementById("result").innerText=
 
 document.getElementById("songLink").innerHTML=
 `<a href="${song.link}" target="_blank">🎧 Écouter la musique</a>`
-
-document.getElementById("anecdote").innerText=song.anecdote
 
 }
 
