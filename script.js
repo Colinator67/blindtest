@@ -103,9 +103,6 @@ input.placeholder=`Artiste ${i+1}`
 container.appendChild(input)
 
 
-  // chargement anecdote
-document.getElementById("anecdote").innerText = song.anecdote
-
 })
 
 song.featuring.forEach((a,i)=>{
