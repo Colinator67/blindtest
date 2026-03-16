@@ -102,6 +102,10 @@ input.placeholder=`Artiste ${i+1}`
 
 container.appendChild(input)
 
+
+  // chargement anecdote
+document.getElementById("anecdote").innerText = song.anecdote
+
 })
 
 song.featuring.forEach((a,i)=>{
@@ -127,7 +131,7 @@ const tag=document.createElement("script")
 tag.src="https://www.youtube.com/iframe_api"
 
 document.body.appendChild(tag)
-document.getElementById("anecdote").innerText = song.anecdote
+
 
 }
 
