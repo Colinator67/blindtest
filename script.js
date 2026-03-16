@@ -201,15 +201,21 @@ return
 
 player.loadVideoById(todaySongs[currentSong].youtube)
 
-document.getElementById("anecdote").innerText = todaySongs[currentSong].anecdote
+// reset timer
+stopTimer()
+elapsedBeforePause = 0
+startTime = null
 
-elapsedBeforePause=0
+document.getElementById("timer").innerText = "⏱ Temps : 0.00s"
 
-document.getElementById("timer").innerText="⏱ Temps : 0.00s"
+// reset progress bar
+document.getElementById("progressBar").style.width = "0%"
 
 renderInputs()
-
 resetHints()
+
+// afficher anecdote nouvelle chanson
+document.getElementById("anecdote").innerText = todaySongs[currentSong].anecdote
 
 }
 
@@ -294,7 +300,7 @@ startTime=Date.now()-elapsedBeforePause
 
 timerInterval=setInterval(()=>{
 
-const elapsed=Date.now()-startTime
+const elapsed = (Date.now() - startTime)
 
 const seconds=Math.floor(elapsed/1000)
 const centi=Math.floor((elapsed%1000)/10)
