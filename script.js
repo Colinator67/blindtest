@@ -201,6 +201,10 @@ return
 
 player.loadVideoById(todaySongs[currentSong].youtube)
 
+setTimeout(()=>{
+player.pauseVideo()
+},200)
+
 // reset timer
 stopTimer()
 elapsedBeforePause = 0
@@ -441,7 +445,7 @@ if(allCorrect){
 
 stopTimer()
 
-const elapsed = Date.now() - startTime
+const elapsed = (Date.now() - startTime)
 
 const seconds = Math.floor(elapsed/1000)
 const centi = Math.floor((elapsed%1000)/10)
