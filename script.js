@@ -36,17 +36,17 @@ date:cols[0],
 
 title:cols[1],
 
-mainArtists:cols[2].split(";"),
+mainArtists:cols[2].split("|"),
 
-featuring:cols[3]?cols[3].split(";"):[],
+featuring:cols[3]?cols[3].split("|"):[],
 
 youtube:cols[4],
 
 link:cols[5],
 
-titleHints:cols[6].split(";"),
+titleHints:cols[6].split("|"),
 
-artistHints:cols[7].split(";"),
+artistHints:cols[7].split("|"),
 
 anecdote:cols[8]
 
